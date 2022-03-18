@@ -12,13 +12,13 @@ Student ID: K441912
 Email: tri.phung@tuni.fi
 """
 def input_measurement(temperature_measured = []) -> list:
-    """_summary_
+    """Declare amount of measurement to records, then record data point of each measurement 
 
     Args:
-        temperature_measured (list, optional): _description_. Defaults to [].
+        temperature_measured (list, optional): An empty list.
 
     Returns:
-        list: _description_
+        temperature_measured (list): the input list populated with input data
     """
     measurement_counts = int(input("Enter amount of days: "))
     
@@ -30,52 +30,58 @@ def input_measurement(temperature_measured = []) -> list:
     return temperature_measured
 
 def mean_calculate(input_list: list) -> float:
-    """_summary_
+    """Calculate the mean of a list of number
+    Which is the sum of the the numbers divided by the number of entries in the list
 
     Args:
-        input_list (list): _description_
+        input_list (list): a list of numbers
 
     Returns:
-        float: _description_
+        mean (float): calculated mean, rounded to 1 decimal place
     """
     mean =  float(sum(input_list) / len(input_list))
     return round(mean, 1)
 
 def median_calculate(input_list: list) -> float:
-    """_summary_
+    """Calculate the median of a list of number
+    Which is the middle number of a sorted list
+    If the list has odd number of entries, median is exactly the middle
+    If the list has even number of entries, median is the mean of the two middle numbers.
 
     Args:
-        input_list (list): _description_
+        input_list (list): a list of numbers
 
     Returns:
-        median (float): _description_
+        median (float): calculated median, rounded to 1 decimal place
     """
     median = float()
     sorted_list = sorted(input_list)
     list_length = len(sorted_list)
     middle_point = list_length // 2
+    is_odd_set = lambda: list_length % 2 == 1
     
-    if list_length % 2 == 1:
+    if is_odd_set():
         median = sorted_list[middle_point]
     else: 
         middle_element_1 = sorted_list[middle_point - 1]
         middle_element_2 = sorted_list[middle_point]
-        median = mean_calculate([middle_element_1, middle_element_2])
-        
+        median = (middle_element_1 + middle_element_2)/2
+    
     return round(median, 1)
 
-def sections_by_median(input_list: list, print_this_out = True):
-    """_summary_
+def sections_by_median(input_list: list):
+    """Divide the data into two sections: equal and larger, or smaller compared to the median 
+    A displayed text is generated and added to two empty list, representing the two sections
 
     Args:
-        input_list (list): _description_
-        print_this_out (bool, optional): _description_. Defaults to True.
+        input_list (list): recorded data points
 
     Returns:
-        _type_: _description_
+        over_at_median (list): a list of displayed text representing data equal or larger than the median
+        under_median (list): a list of displayed text representing data smaller than the median
     """
-    over_at_median = list()
-    under_median = list()
+    over_at_median = []
+    under_median = []
     median = median_calculate(input_list)
     mean = mean_calculate(input_list)
     
@@ -86,27 +92,47 @@ def sections_by_median(input_list: list, print_this_out = True):
             over_at_median.append(displayed_text)
         else:
             under_median.append(displayed_text)
+                
+    return over_at_median, under_median
 
-    if print_this_out:
-        print("Over or at median were:")
-        print("\n".join(over_at_median))
-        print()
+def print_sections_by_median(input_list: list):
+    """Join the displayed text from a list into a string
+    Print them to the console.
+
+    Args:
+        input_list (list): measured data points
         
-        print("Under median were:")
-        print("\n".join(under_median))
-        
-    else:
-        return over_at_median, under_median
+    Returns:
+        Void
+    """
+    over_at_median, under_median = sections_by_median(input_list)
 
-def main():
-    temperature = input_measurement()
-
-    print()
-    print(f"Temperature mean: {mean_calculate(temperature)}C")
-    print(f"Temperature median: {median_calculate(temperature)}C")
+    print("Over or at median were:")
+    print("\n".join(over_at_median))
     print()
     
-    sections_by_median(temperature, print_this_out = True)
+    print("Under median were:")
+    print("\n".join(under_median))
+        
+def print_mean_and_median(input_list: list):
+    """Print the mean and median of the temperature
+
+    Args:
+        input_list (list): measured data points
+    
+    Returns:
+        Void
+    """
+    print()
+    print(f"Temperature mean: {mean_calculate(input_list)}C")
+    print(f"Temperature median: {median_calculate(input_list)}C")
+    print()
+
+def main():
+    temperature = []
+    input_measurement(temperature)
+    print_mean_and_median(temperature)    
+    print_sections_by_median(temperature)
 
 if __name__ ==  "__main__":
     main()
