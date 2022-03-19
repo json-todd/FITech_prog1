@@ -1,0 +1,59 @@
+Grader: tobias.halfar@tuni.fi
+
+Automatic evaluation: 20
+Grader points: 75
+Late penalty for grader points: -0
+Total points: 95
+
+======================================================================
+DIVISION OF THE PROGRAM INTO FUNCTIONS
+50/50 pts
+======================================================================
+
++ You have divided the program into functions well. Each function 
+  carries out a distinct action, which you have also named 
+  appropriately.
+
++ The program includes an appropriate amount of functions and the 
+  functions are appropriately sized. They also use parameters and 
+  return values to transmit information in a suitable way.
+  
+  
+======================================================================
+PROGRAMMING STYLE
+25/30 pts
+======================================================================
+
+ COMMENTS:
+
++ The program code has comments.
+
++ Functions have comments.
+
+
+* Incomplete initial comment
+
+  - A short description of what the program does should also be 
+    included in the initial comment.
+
+
+ NAMING:
+
++ Variables have descriptive names.
+
++ Functions have descriptive names.
+
+
+ POSITIONING OF THE PROGRAM CODE:
+
++ The program code was positioned neatly and divided into clean 
+  wholes using empty lines. Spaces were also used appropriately.
+
++ Spaces are used apprpriately to clarify the code.
+
+
+====================================================================== 
+GENERAL PRINCIPLE OF THE SOLUTION
+======================================================================
+
++ Your program was generally well done and universally implemented.
