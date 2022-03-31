@@ -12,8 +12,88 @@ Student ID: K441912
 Email: tri.phung@tuni.fi
 """
 
+
 def main():
-    print('Hello world')
+    # file = input('Enter file name: ')
+    file = 'courses.txt'
+    print(file)
+    try:
+        file_handle = open(file, 'r')
+        print('get to open file')
+
+    except:
+        print('Error opening file!')
+        return
+        
+    course_db = {}
+    for line in file_handle:
+        print('get to line loop')
+        data = line.rstrip.split(';')
+        
+        if len(data) != 3:
+            return ('Error in file!')
+        
+        department = data[0]; course_name = data[1]; credit_point = data[2];
+
+        if department not in course_db:
+            course_db[department] = {}
+
+        course_db[department]['course'] = course_name
+        course_db[department]['credit'] = credit_point
+
+    file_handle.close()
+
+    print(course_db);         
+            
+     
+
+    # receive files and open it in read mode
+    # handle error if cannot open file
+        # end program
+    
+    # with open file as file_handle
+    # read each line
+    # expect each line to have format `a;b;c`
+        # line.rstrip().split(;).length == 3
+    # if not, catch the error 
+        # end program
+
+    # enter a while loop
+    # output a UI message as program guide
+    #     [A]dd / [C]redits / [D]elete / [P]rint all / p[R]int department / [Q]uit
+    # Enter command:
+
+        # command == a
+        # command == c
+        # command == d
+        # command == p
+        # command == r
+        # command == q
+            # break loop
+
+    # End program
+
+    # Choose datastructure
+    # course_ds <dict> =  { 
+    # department_name <dict> {
+    #    course: "string",
+    #    credit: int
+    # }}
+
+    # data = line.rstrip().split(;)
+    # department_name = data[0]; course_name = data[1]; credit_point = data[2]
+
+    # if department not in course_ds:
+        # course_ds[department_name] = {}
+    
+    # course_ds[department_name]["course"] = course_name
+    # course_ds[department_name]["credit"] = credit_point
+
+    # alt
+    
+    
+    
+    
 
 if __name__ == "__main__":
     main()
