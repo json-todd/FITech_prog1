@@ -12,88 +12,98 @@ Student ID: K441912
 Email: tri.phung@tuni.fi
 """
 
+def course_database_process(file):
+    course_db = {}
+    for line in file:
+        data = line.rstrip().split(';')
+        
+        if len(data) != 3:
+            return 0
+        
+        department = data[0]; course_name = data[1]; credit_point = data[2]
+
+        if department not in course_db:
+            course_db[department] = []
+
+        payload = {
+            "course": course_name,
+            "credit": credit_point
+        }
+        course_db[department].append(payload)    
+    return course_db
 
 def main():
     # file = input('Enter file name: ')
     file = 'courses.txt'
-    print(file)
+    
     try:
         file_handle = open(file, 'r')
-        print('get to open file')
 
-    except:
+    except OSError:
         print('Error opening file!')
+        return 
+    
+    course_db = course_database_process(file_handle)
+    if course_db == 0:
+        print('Error in file!')
         return
-        
-    course_db = {}
-    for line in file_handle:
-        print('get to line loop')
-        data = line.rstrip.split(';')
-        
-        if len(data) != 3:
-            return ('Error in file!')
-        
-        department = data[0]; course_name = data[1]; credit_point = data[2];
-
-        if department not in course_db:
-            course_db[department] = {}
-
-        course_db[department]['course'] = course_name
-        course_db[department]['credit'] = credit_point
-
     file_handle.close()
 
-    print(course_db);         
-            
-     
-
-    # receive files and open it in read mode
-    # handle error if cannot open file
-        # end program
+    print(course_db, end = '\n\n')
     
-    # with open file as file_handle
-    # read each line
-    # expect each line to have format `a;b;c`
-        # line.rstrip().split(;).length == 3
-    # if not, catch the error 
-        # end program
+    while True:
+        print()
+        print('[A]dd / [C]redits / [D]elete / [P]rint all / p[R]int department / [Q]uit')
+        user_input = input('Enter command: ').split(' ')
+        print()
+        
+        program_command = user_input[0]
+        program_param = user_input[1:] if len(user_input) > 1 else None
+        print(program_param)
+        
+        if program_command == 'a':
+            add_course_to_db(course_db, program_param)
+        elif program_command == 'c':
+            pass
+        elif program_command == 'd':
+             pass
+        elif program_command == 'p':
+            print_all(course_db)
+        elif program_command == 'r':
+            print_dep(course_db, program_param)
+        elif program_command == 'q':
+            return 'Ending program.'
+        else:
+            print('Invalid command!')
 
-    # enter a while loop
-    # output a UI message as program guide
-    #     [A]dd / [C]redits / [D]elete / [P]rint all / p[R]int department / [Q]uit
-    # Enter command:
+def add_course_to_db(db, add_data):
+    add_dep = add_data[0]; add_credit = add_data[-1]
+    add_course = " ".join(add_data[1:-1])
+    payload = {
+        'course': add_course,
+        'credit': add_credit
+    }
 
-        # command == a
-        # command == c
-        # command == d
-        # command == p
-        # command == r
-        # command == q
-            # break loop
-
-    # End program
-
-    # Choose datastructure
-    # course_ds <dict> =  { 
-    # department_name <dict> {
-    #    course: "string",
-    #    credit: int
-    # }}
-
-    # data = line.rstrip().split(;)
-    # department_name = data[0]; course_name = data[1]; credit_point = data[2]
-
-    # if department not in course_ds:
-        # course_ds[department_name] = {}
+    if add_dep not in db:
+        db[add_dep] = []
+        print(f'Added department {add_dep} with course {add_course}')
+    else:
+        print(f'Added course {add_course} to department {add_dep}')
     
-    # course_ds[department_name]["course"] = course_name
-    # course_ds[department_name]["credit"] = credit_point
+    db[add_dep].append(payload)
 
-    # alt
-    
-    
-    
-    
+def print_all(db):
+    for department in db:
+        print(f'*{department}*')
+        for course_credit in db[department]:
+            print(course_credit['course'] + ' : ' + course_credit['credit'])
+
+def print_dep(db, dep_data):
+    dep = dep_data[0]
+    print(f'*{dep}*')
+    for course_credit in db[dep]:
+        print(course_credit['course'] + ' : ' + course_credit['credit'])
+  
 
 if __name__ == "__main__":
     main()
