@@ -64,6 +64,7 @@ def main():
     
     file_handle.close()
 
+    print(course_db)
     while True:
         print()
         print('[A]dd / [C]redits / [D]elete / [P]rint all / p[R]int department / [Q]uit')
@@ -211,10 +212,7 @@ def sort_db(db:dict)->dict:
             for course_credit_not_order in course_credit:
                 course_not_order = course_credit_not_order['course']
                 if course_in_order == course_not_order:
-                    db_sorted[dep].append({
-                        'course': course_in_order,
-                        'credit': course_credit_not_order['credit']
-                    })
+                    db_sorted[dep].append(course_credit_not_order)
 
     return db_sorted            
  
