@@ -8,9 +8,6 @@ Student ID: K441912
 Email: tri.phung@tuni.fi
 """
 
-from unicodedata import name
-
-
 class Character:
     """
     This class defines what a character is int he game and what
@@ -42,6 +39,18 @@ class Character:
             self._backpack.pop(item)
 
         return True
+
+    def get_name(self) -> str:
+        # Return the name of character
+        return self.name
+    
+    def has_item(self, item) -> bool:
+        # Return true if character has item in backpack
+        return item in self._backpack
+    
+    def how_many(self, item) -> int:
+        # Return amount of item in character's backpack
+        return self._backpack.get(item, 0)
         
     def printout(self) -> None:
         # Print out in format of name, amount and associated items
@@ -120,20 +129,33 @@ class Character:
         if weapon not in WEAPONS: 
             attack_failure_string += f'unknown weapon \"{weapon}\".'
         elif self.name == target.name:
-            attack_failure_string += f'{self.name} cannot attack him/herself.'
-        elif not self._backpack.get(weapon, 0):
+            attack_failure_string += f'{self.name} can\'t attack him/herself.'
+        elif not self.has_item(weapon):
             attack_failure_string += f'{self.name} doesn\'t have \"{weapon}\".'
         
         if failure_string_len < len(attack_failure_string):
             print(attack_failure_string)
             return False
         
-        success_attack_printout = f"{self.name} attacks {target.name} delivering {WEAPONS[weapon]} damage."
+        damage = WEAPONS[weapon]
+        success_attack_printout = f"{self.name} attacks {target.name} delivering {damage} damage."
         print(success_attack_printout)
+        
+        target.take_damage(damage)        
+        if target.is_dead():
+            print(f"{self.name} successfully defeats {target.name}.")
+        
         return True
         
-       
+    def is_dead(self) -> bool:
+        # When character hp reaches 0, the character dies
+        return True if self.hp <= 0 else False
+    
+    def take_damage(self, damage) -> None:
+        # Reduce the hitpoints of a character by the damage
+        self.hp -= damage
 
+        
 
 WEAPONS = {
     # Weapon          Damage
