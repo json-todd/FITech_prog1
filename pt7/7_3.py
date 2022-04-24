@@ -28,11 +28,6 @@ def main():
         else:
             print(f'The price of {item} is {PRICES[item]:.2f} e')
         
-            
-    
-    
-    
-
 
 if __name__ == "__main__":
     main()
