@@ -13,35 +13,35 @@ class Userinterface:
         self.__mainwindow = Tk()
 
         # TODO: Create an Entry-component for the weight.
-        self.__weight_value = None
+        self.__weight_value = Entry(self.__mainwindow)
 
         # TODO: Create an Entry-component for the height.
-        self.__height_value = None
+        self.__height_value = Entry(self.__mainwindow)
 
         # TODO: Create a Button that will call the calculate_BMI-method.
         # TODO: Change the colour of the Button to something else than
         #       the default colour.
-        self.__calculate_button = None
+        self.__calculate_button = Button(self.__mainwindow, text="Get BMI",command=self.calculate_BMI)
 
         # TODO: Create a Label that will show the decimal value of the BMI
         #      after it has been calculated.
-        self.__result_text = None
+        self.__result_text = Label(background="white", text="BMI")
 
         # TODO: Create a Label that will show a verbal description of the BMI
         #       after the BMI has been calculated.
-        self.__explanation_text = None
+        self.__explanation_text = Label(background="white", text="BMI desc.")
 
         # TODO: Create a button that will call the stop-method.
-        self.__stop_button = None
+        self.__stop_button = Button(background="red", text="stop", command=self.stop)
 
         # TODO: Place the components in the GUI as you wish.
         # If you read the Gaddis book, you can use pack here instead of grid!
-        self.__weight_value.grid()
-        self.__height_value.grid()
-        self.__calculate_button.grid()
-        self.__stop_button.grid()
-        self.__result_text.grid()
-        self.__explanation_text.grid()
+        self.__weight_value.grid(row=0,column=0,sticky=E)
+        self.__height_value.grid(row=0,column=1,sticky=E)
+        self.__calculate_button.grid(row=0,column=2,sticky=E+W)
+        self.__stop_button.grid(row=2,column=2,sticky=E+S)
+        self.__result_text.grid(row=1,column=0,sticky=E+W)
+        self.__explanation_text.grid(row=1,column=1,columnspan=2,sticky=E+W)
 
     # TODO: Implement this method.
     def calculate_BMI(self):
