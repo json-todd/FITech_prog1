@@ -140,7 +140,6 @@ SHIP_LIST: list = []
 def main():
 
     board = [[' ']*10 for _ in range(10)]
-    # SHIP_LIST = []
     shot_location = []
 
     read_file_exit_status = read_file()
