@@ -1,15 +1,15 @@
 class Ship():
     battle_station = []
-    def __init__(self, name, *arg):
+    def __init__(self, name: str, location: list):
         self.name = name
-        self.locations = list(arg)
+        self.locations = location
         self.damage = []
       
         for location in self.locations:
           Ship.battle_station.append(location)
 
     def has_overlap(self) -> bool:
-        return set(len(Ship.battle_station)) == len(Ship.battle_station)
+        return len(set(Ship.battle_station)) != len(Ship.battle_station)
 
     def get_name(self) -> str:
         return self.name[0].upper()
@@ -29,6 +29,7 @@ class Ship():
 
 def read_file() -> bool:
     file = input('Enter file name: ')
+    # if len(file) == 0: file = 'board.txt'
 
     try:
         file_handle = open(file,'r')
@@ -37,22 +38,23 @@ def read_file() -> bool:
         for line in file_handle:
             line = line.rstrip()
             data = line.split(';')
-            name = data[0]
-            coordinate = data[1:]
+            name: str = data[0]
+            coordinate: list = data[1:]
             
             for loc in coordinate:
-                if get_valid_coordinate(loc) != None:  
-                    Ship_object = Ship(name, coordinate)
-                    if not Ship_object.has_overlap():
-                        SHIP_LIST.append( Ship_object )
-                        return True
-                    else:
-                        print('There are overlapping ships in the input file!')
-                        return False
-                    
-                else:
+                if get_valid_coordinate(loc) == None:  
                     print('Error in ship coordinates!')
                     return False
+            
+            Ship_object = Ship(name, coordinate)
+            SHIP_LIST.append( Ship_object )
+            
+            if Ship_object.has_overlap():
+                print('There are overlapping ships in the input file!')
+                return False
+        
+        return True
+            
     except:
         print('File cannot be read!')
         return False
@@ -131,6 +133,9 @@ def has_sunk_all_ship() -> bool:
     
     return sunk_ship_count == ship_count
 
+ALPHABET: list = ['A','B','C','D','E','F','G','H','I','J']
+BOARD_SIDE: int = 10
+SHIP_LIST: list = []
 
 def main():
 
@@ -138,9 +143,10 @@ def main():
     # SHIP_LIST = []
     shot_location = []
 
-    # read_file_exit_status = read_file()
-    # if not read_file_exit_status:
-    #     return
+    read_file_exit_status = read_file()
+    if not read_file_exit_status:
+        return False
+    
     while True:
         print_board(board)
 
@@ -167,6 +173,7 @@ def main():
         board = shoot_coordiate(board, x_coord, y_coord)
         shot_location.append(user_input)
 
+    return True
 
 if __name__ == "__main__":
     main()
