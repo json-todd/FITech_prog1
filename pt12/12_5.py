@@ -60,7 +60,7 @@ def read_file() -> bool:
         return False
 
         
-def get_valid_coordinate(xy_coord):
+def get_valid_coordinate(xy_coord: str) -> tuple or None:
     global ALPHABET
     try:
         assert len(xy_coord) == 2
